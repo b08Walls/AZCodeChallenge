@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { StockPaper } from "./StockDisplayStyles";
+import { H2, TitlePaper } from "./StockDisplayStyles";
 import Grid from "@material-ui/core/Grid";
 import StockElement from "./StockElement/StockElement";
 import { AppContext } from "./../../Contexts/AppContext/AppContext";
@@ -20,85 +20,29 @@ const StockDisplay = props => {
       setStocks(newStocks);
     }
   }, [state]);
-  const demoList = [
-    {
-      symbol: "ACN",
-      name: "Accenture",
-      price: "19.99",
-      url: "www.accenture.com"
-    },
-    {
-      symbol: "ACN",
-      name: "Accenture",
-      price: "19.99",
-      url: "www.accenture.com"
-    },
-    {
-      symbol: "ACN",
-      name: "Accenture",
-      price: "19.99",
-      url: "www.accenture.com"
-    },
-    {
-      symbol: "ACN",
-      name: "Accenture",
-      price: "19.99",
-      url: "www.accenture.com"
-    },
-    {
-      symbol: "ACN",
-      name: "Accenture",
-      price: "19.99",
-      url: "www.accenture.com"
-    },
-    {
-      symbol: "ACN",
-      name: "Accenture",
-      price: "19.99",
-      url: "www.accenture.com"
-    },
-    {
-      symbol: "ACN",
-      name: "Accenture",
-      price: "19.99",
-      url: "www.accenture.com"
-    },
-    {
-      symbol: "ACN",
-      name: "Accenture",
-      price: "19.99",
-      url: "www.accenture.com"
-    },
-    {
-      symbol: "ACN",
-      name: "Accenture",
-      price: "19.99",
-      url: "www.accenture.com"
-    }
-  ];
   return (
-    <Grid
-      container
-      direction="row"
-      justify="flex-start"
-      alignItems="flex-start"
-      spacing={3}
-    >
-      <Grid item xs={12}>
-        <StockPaper>
-          <h2>Your Stocks</h2>
-        </StockPaper>
+    <>
+      <TitlePaper style={{ background: "#024574" }}>
+        <H2>Your Stocks</H2>
+      </TitlePaper>
+      <Grid
+        container
+        direction="row"
+        justify="flex-start"
+        alignItems="strech"
+        spacing={3}
+      >
+        {stocks.map((stock, index) => {
+          return (
+            <StockElement
+              key={`stock-element-${index}`}
+              {...stock}
+              index={index}
+            />
+          );
+        })}
       </Grid>
-      {stocks.map((stock, index) => {
-        return (
-          <StockElement
-            key={`stock-element-${index}`}
-            {...stock}
-            index={index}
-          />
-        );
-      })}
-    </Grid>
+    </>
   );
 };
 

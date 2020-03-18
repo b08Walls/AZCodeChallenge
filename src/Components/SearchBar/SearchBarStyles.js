@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
+
 export const SearchBarFrame = styled.div`
   display: flex;
-  background-color: ${props => props.theme.headerBarColor};
+  background-color: ${props => props.theme.backgroundDefault};
   flex-direction: row-reverse;
   align-items: center;
   width: 100%;
@@ -20,16 +21,19 @@ export const SearchTextField = styled.input`
   border: none;
   font-size: 20px;
   /* border: solid 2px #0f0f0f; */
-  border-bottom: solid 2px black;
+  border-bottom: solid 2px white;
 `;
 
 export const SearchButtonFrame = styled.div`
   /* margin: 100px 15px; */
   margin-right: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
   /* padding: 5px; */
 `;
 
 export const SearchBarTitle = styled.p`
   margin: 0 15px;
   font-size: 30px;
+  color: white;
 `;

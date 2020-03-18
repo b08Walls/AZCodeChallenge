@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import {
@@ -13,12 +13,16 @@ import {
 import SearchBar from "./Components/SearchBar/SearchBar";
 import StockDisplay from "./Components/StockDisplay/StockDisplay";
 import StockGraph from "./Components/StockGraph/StockGraph";
-import { AppContextProvider } from "./Contexts/AppContext/AppContext";
+import {
+  AppContextProvider,
+  AppContext
+} from "./Contexts/AppContext/AppContext";
 import SocketManager from "./Components/SocketManager/SocketManager";
+import { local } from "d3";
 function App() {
   return (
     <AppContextProvider>
-      <SocketManager />
+      {/* <SocketManager /> */}
       <ThemeWrapper>
         <GlobalStyles />
         <MainFrame>

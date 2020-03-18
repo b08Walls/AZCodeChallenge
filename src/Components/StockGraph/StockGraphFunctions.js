@@ -28,7 +28,7 @@ const getSymbolData = requestProps => {
         close: Number(prices[timeStamp]["4. close"])
       };
     });
-    res({ [symbol]: dataArray });
+    res(dataArray);
   });
 };
 

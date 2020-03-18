@@ -13,8 +13,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import IconButton from "@material-ui/core/IconButton";
 
 const SearchBar = props => {
+  //------ STATES AND CONTEXT ----------------------------------------------------------------------------
   const [symbol, setSymbol] = useState("");
   const [state, setState] = useContext(AppContext);
+  //------ HANDLERS --------------------------------------------------------------------------------------
   const handleSearch = async () => {
     if (symbol) {
       const profileUrl = `https://finnhub.io/api/v1/stock/profile?symbol=${symbol}&token=${finnHubKey}`;
@@ -33,7 +35,12 @@ const SearchBar = props => {
             price: priceData ? priceData.c : undefined
           }
         };
-        setState({ ...state, myStocks: _myStocks });
+        const newState = { ...state, myStocks: _myStocks };
+        setState(newState);
+        localStorage.setItem(
+          "StockManagerAppContext",
+          JSON.stringify(newState)
+        );
       } else {
         alert("The Symbol you entered is not a valid symbol");
       }
