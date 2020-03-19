@@ -2,7 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import * as d3 from "d3";
 import * as fc from "d3fc";
 import axios from "axios";
-import { GridSvgCanvas } from "./StockStyles";
+import {
+  GridSvgCanvas,
+  GraphPlaceHolder,
+  GraphPlaceHolderTitle,
+  GraphPlaceHolderImage,
+  TitlePaper
+} from "./StockStyles";
 import { getSymbolData } from "./StockGraphFunctions";
 import { AppContext } from "./../../Contexts/AppContext/AppContext";
 const StockGraph = props => {
@@ -28,7 +34,7 @@ const StockGraph = props => {
 
   useEffect(() => {
     console.log("data", data);
-    if (data) {
+    if (selectedStock && data) {
       const xExtent = fc.extentDate().accessors([d => d.date]);
       const yExtent = fc
         .extentLinear()
@@ -118,21 +124,38 @@ const StockGraph = props => {
         selection
           .enter()
           .select(".x-axis")
-          .style("color", "white");
+          .style("fill", "white");
       });
+
+      const axis = fc
+        .axisBottom()
+        .scale(fc.xScale)
+        .decorate(function(s) {
+          s.enter()
+            .select("text")
+            .style("text-anchor", "start")
+            .attr("transform", "rotate(45 -10 10)");
+        });
 
       d3.select("#chart-div")
         .datum(data)
         .call(chart);
+      // .call(axis);
     }
   }, [data, myStocks, selectedStock]);
 
-  return data ? (
+  return selectedStock ? (
     <GridSvgCanvas id="chart-div" />
   ) : (
-    <div>
-      <h2>Select some Stocks to draw a chart</h2>
-    </div>
+    <GraphPlaceHolder>
+      <TitlePaper style={{ background: "#024574" }}>
+        <GraphPlaceHolderTitle>
+          Click on a Stocks to draw a chart
+        </GraphPlaceHolderTitle>
+      </TitlePaper>
+
+      <GraphPlaceHolderImage />
+    </GraphPlaceHolder>
   );
 };
 

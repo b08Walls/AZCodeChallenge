@@ -11,7 +11,6 @@ const getSymbolData = requestProps => {
         outputsize: "full"
       };
 
-  //   const requestUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=${_historicProps.interval}&apikey=6YNZVN7G1NS7IS3Z&outputsize=${_historicProps.outputsize}`;
   const requestUrl = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${symbol}&interval=${_historicProps.interval}&apikey=${alphaVantageKey}&outputsize=${_historicProps.outputsize}`;
 
   return new Promise(async res => {

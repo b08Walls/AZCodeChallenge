@@ -15,23 +15,32 @@ const StockDisplay = props => {
     setSelected(selectedStock === symbol);
   }, [selectedStock, symbol]);
 
-  const handleClose = () => {
+  const handleClose = e => {
+    e.stopPropagation();
     const tempState = { ...state };
     const _myStocks = { ...state.myStocks };
     delete _myStocks[symbol];
     tempState.myStocks = _myStocks;
+    tempState.selectedStock =
+      tempState.selectedStock === symbol ? undefined : tempState.selectedStock;
     setState(tempState);
     localStorage.setItem("StockManagerAppContext", JSON.stringify(tempState));
   };
 
   const handlePaperClick = () => {
-    console.log("YOU TOUCH A PAPER!", symbol);
     setState({ ...state, selectedStock: symbol });
     setSelected(true);
   };
 
   return (
-    <Grid item xs={3} key={`stock-element-${index}`} selected={selected}>
+    <Grid
+      item
+      xs={12}
+      md={6}
+      lg={3}
+      key={`stock-element-${index}`}
+      selected={selected}
+    >
       <StockPaper
         style={{ background: `${selected ? "#0360A3" : "#024574"}` }}
         onClick={handlePaperClick}
@@ -47,7 +56,10 @@ const StockDisplay = props => {
           <strong>Price:</strong> $ {price}
         </P>
         <P>
-          <strong>Web Site:</strong> <A href={url}>Click here</A>
+          <strong>Web Site:</strong>{" "}
+          <A href={url} target="_blank" onClick={e => e.stopPropagation()}>
+            Click here
+          </A>
         </P>
         <button onClick={() => alert("mora data here")}>More...</button>
       </StockPaper>
