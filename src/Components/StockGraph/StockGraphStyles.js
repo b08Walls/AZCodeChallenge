@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import Paper from "@material-ui/core/Paper";
@@ -9,6 +8,9 @@ export const TitlePaper = styled(Paper)`
   width: calc(100% - 20px);
   height: auto;
   margin-bottom: 20px;
+  @media (max-width: 760px) {
+    font-size: 14px;
+  }
 `;
 
 export const GridSvgCanvas = styled.div`
@@ -36,4 +38,7 @@ export const GraphPlaceHolderImage = styled(AssessmentIcon)`
   display: flex;
   font-size: 300px !important;
   margin: auto;
+  @media (max-width: 760px) {
+    font-size: 200px !important;
+  }
 `;

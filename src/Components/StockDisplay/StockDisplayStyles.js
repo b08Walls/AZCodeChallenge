@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
 
@@ -14,6 +13,13 @@ export const TitlePaper = styled(Paper)`
   width: calc(100% - 20px);
   height: auto;
   margin-bottom: 20px;
+  @media (max-width: 760px) {
+    font-size: 14px;
+  }
+`;
+
+export const DetailPaper = styled(TitlePaper)`
+  text-align: justify;
 `;
 
 export const P = styled.p`
@@ -38,4 +44,13 @@ export const StockElementHeader = styled.div`
   justify-content: space-between;
   width: calc(100%-10px);
   padding: 0 10px;
+`;
+
+export const StockDetailsModal = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: flex-start;
+  padding: 20px;
+  width: auto;
 `;

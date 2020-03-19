@@ -5,6 +5,7 @@ import StockElement from "./StockElement/StockElement";
 import { AppContext } from "./../../Contexts/AppContext/AppContext";
 
 const StockDisplay = props => {
+  // eslint-disable-next-line no-unused-vars
   const [state, setState] = useContext(AppContext);
   const [stocks, setStocks] = useState([]);
   useEffect(() => {
@@ -29,7 +30,7 @@ const StockDisplay = props => {
         container
         direction="row"
         justify="flex-start"
-        alignItems="strech"
+        alignItems="stretch"
         spacing={3}
       >
         {stocks.map((stock, index) => {

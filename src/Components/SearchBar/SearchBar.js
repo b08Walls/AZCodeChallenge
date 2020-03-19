@@ -54,11 +54,7 @@ const SearchBar = props => {
 
   return (
     <SearchBarFrame>
-      <SearchButtonFrame>
-        <IconButton onClick={handleSearch}>
-          <SearchIcon />
-        </IconButton>
-      </SearchButtonFrame>
+      <SearchBarTitle>Stock Manager</SearchBarTitle>
       <SearchTextField
         placeholder="Type your Stock Symbol here..."
         value={symbol}
@@ -72,7 +68,11 @@ const SearchBar = props => {
           }
         }}
       />
-      <SearchBarTitle>Stock Manager</SearchBarTitle>
+      <SearchButtonFrame>
+        <IconButton onClick={handleSearch}>
+          <SearchIcon />
+        </IconButton>
+      </SearchButtonFrame>
     </SearchBarFrame>
   );
 };

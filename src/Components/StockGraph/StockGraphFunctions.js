@@ -7,7 +7,7 @@ const getSymbolData = requestProps => {
   const _historicProps = historicProps
     ? historicProps
     : {
-        interval: "15min",
+        interval: "1min",
         outputsize: "full"
       };
 
@@ -17,16 +17,21 @@ const getSymbolData = requestProps => {
     const rawData = await axios.get(requestUrl);
     const { data } = rawData;
     const prices = data[`Time Series (${_historicProps.interval})`] || [];
-    const dataArray = Object.keys(prices).map(timeStamp => {
-      return {
-        date: new Date(timeStamp),
-        volume: Number(prices[timeStamp]["5. volume"]),
-        high: Number(prices[timeStamp]["2. high"]),
-        low: Number(prices[timeStamp]["3. low"]),
-        open: Number(prices[timeStamp]["1. open"]),
-        close: Number(prices[timeStamp]["4. close"])
-      };
-    });
+    const today = new Date().getTime() - 60 * 60 * 24 * 1000;
+    const dataArray = Object.keys(prices)
+      .map(timeStamp => {
+        return {
+          date: new Date(new Date(timeStamp).getTime() - 60 * 60 * 2 * 1000),
+          volume: Number(prices[timeStamp]["5. volume"]),
+          high: Number(prices[timeStamp]["2. high"]),
+          low: Number(prices[timeStamp]["3. low"]),
+          open: Number(prices[timeStamp]["1. open"]),
+          close: Number(prices[timeStamp]["4. close"])
+        };
+      })
+      .filter(datum => {
+        return datum.date.getTime() > today;
+      });
     res(dataArray);
   });
 };

@@ -1,23 +1,29 @@
 import React, { useEffect, useState, useContext } from "react";
 import * as d3 from "d3";
 import * as fc from "d3fc";
-import axios from "axios";
 import {
   GridSvgCanvas,
   GraphPlaceHolder,
   GraphPlaceHolderTitle,
   GraphPlaceHolderImage,
   TitlePaper
-} from "./StockStyles";
+} from "./StockGraphStyles";
 import { getSymbolData } from "./StockGraphFunctions";
 import { AppContext } from "./../../Contexts/AppContext/AppContext";
-const StockGraph = props => {
-  const { historicProps } = props;
+import { SocketContext } from "./../../Contexts/SocketContext/SocketContext";
 
-  const [data, setData] = useState(null);
+const StockGraph = props => {
+  const [historicData, setHistoricData] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [state, setState] = useContext(AppContext);
+  // eslint-disable-next-line no-unused-vars
+  const [socketData, appendSocketData] = useContext(SocketContext);
 
   const { myStocks, selectedStock } = state;
+  const data =
+    historicData || socketData.data
+      ? [...(socketData.data || []), ...(historicData || [])]
+      : null;
 
   useEffect(() => {
     const callForData = async () => {
@@ -25,15 +31,13 @@ const StockGraph = props => {
         const resultData = await getSymbolData({
           symbol: selectedStock
         });
-
-        setData(resultData);
+        setHistoricData(resultData);
       }
     };
     callForData();
   }, [selectedStock]);
 
   useEffect(() => {
-    console.log("data", data);
     if (selectedStock && data) {
       const xExtent = fc.extentDate().accessors([d => d.date]);
       const yExtent = fc
@@ -99,50 +103,12 @@ const StockGraph = props => {
         .yOrient("right")
         .svgPlotArea(multi);
 
-      chart.decorate(selection => {
-        selection
-          .enter()
-          .select(".x-label")
-          .style("color", "white")
-          .style("background", "rgba(255,255,255,.06)")
-          .style("padding", "10px")
-          .style("border-radius", "5px");
-        selection
-          .enter()
-          .select(".y-label")
-          .style("color", "white")
-          .style("background", "rgba(255,255,255,.06)")
-          .style("padding", "10px")
-          .style("border-radius", "5px");
-        selection
-          .enter()
-          .select(".chart-label")
-          .style("color", "white")
-          .style("background", "rgba(255,255,255,.06)")
-          .style("padding", "10px")
-          .style("border-radius", "5px");
-        selection
-          .enter()
-          .select(".x-axis")
-          .style("fill", "white");
-      });
-
-      const axis = fc
-        .axisBottom()
-        .scale(fc.xScale)
-        .decorate(function(s) {
-          s.enter()
-            .select("text")
-            .style("text-anchor", "start")
-            .attr("transform", "rotate(45 -10 10)");
-        });
-
       d3.select("#chart-div")
         .datum(data)
+        // .datum([...(socketData.data || [])])
         .call(chart);
-      // .call(axis);
     }
-  }, [data, myStocks, selectedStock]);
+  }, [data, myStocks, selectedStock, socketData]);
 
   return selectedStock ? (
     <GridSvgCanvas id="chart-div" />
@@ -150,7 +116,7 @@ const StockGraph = props => {
     <GraphPlaceHolder>
       <TitlePaper style={{ background: "#024574" }}>
         <GraphPlaceHolderTitle>
-          Click on a Stocks to draw a chart
+          Click on a stock to see its chart
         </GraphPlaceHolderTitle>
       </TitlePaper>
 

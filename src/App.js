@@ -1,5 +1,4 @@
-import React, { useEffect, useContext } from "react";
-import logo from "./logo.svg";
+import React from "react";
 import "./App.css";
 import {
   MainFrame,
@@ -13,32 +12,32 @@ import {
 import SearchBar from "./Components/SearchBar/SearchBar";
 import StockDisplay from "./Components/StockDisplay/StockDisplay";
 import StockGraph from "./Components/StockGraph/StockGraph";
-import {
-  AppContextProvider,
-  AppContext
-} from "./Contexts/AppContext/AppContext";
+import { AppContextProvider } from "./Contexts/AppContext/AppContext";
 import SocketManager from "./Components/SocketManager/SocketManager";
-import { local } from "d3";
+import { SocketContextProvider } from "./Contexts/SocketContext/SocketContext";
 function App() {
   return (
     <AppContextProvider>
-      {/* <SocketManager /> */}
-      <ThemeWrapper>
-        <GlobalStyles />
-        <MainFrame>
-          <HeadFrame>
-            <SearchBar />
-          </HeadFrame>
-          <BodyFrame>
-            <StocksFrame>
-              <StockDisplay />
-            </StocksFrame>
-            <GraphFrame>
-              <StockGraph />
-            </GraphFrame>
-          </BodyFrame>
-        </MainFrame>
-      </ThemeWrapper>
+      <SocketContextProvider>
+        <SocketManager />
+        <ThemeWrapper>
+          <GlobalStyles />
+          <MainFrame>
+            <HeadFrame>
+              <SearchBar />
+            </HeadFrame>
+            <BodyFrame>
+              <StocksFrame>
+                <StockDisplay />
+              </StocksFrame>
+
+              <GraphFrame>
+                <StockGraph />
+              </GraphFrame>
+            </BodyFrame>
+          </MainFrame>
+        </ThemeWrapper>
+      </SocketContextProvider>
     </AppContextProvider>
   );
 }
