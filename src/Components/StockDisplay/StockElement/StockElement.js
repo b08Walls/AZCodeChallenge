@@ -4,12 +4,14 @@ import Grid from "@material-ui/core/Grid";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { AppContext } from "./../../../Contexts/AppContext/AppContext";
+import { SocketContext } from "./../../../Contexts/SocketContext/SocketContext";
 import StockModal from "./../StockModal/StockModal";
 
 const StockDisplay = props => {
   const { symbol, name, price, url, index } = props;
 
   const [state, setState] = useContext(AppContext);
+  const [stocketData, setSocketData] = useContext(SocketContext);
   const [selected, setSelected] = useState(false);
 
   const { selectedStock } = state;
@@ -32,6 +34,7 @@ const StockDisplay = props => {
   const handlePaperClick = () => {
     setState({ ...state, selectedStock: symbol });
     setSelected(true);
+    setSocketData({ data: [] });
   };
 
   return (
